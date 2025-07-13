@@ -1,6 +1,8 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000/api";
+
 const axiosBaseQuery = ({baseURL}) => async ({url, method, data, params }) => {
     try {
         const result = await axios({
@@ -18,8 +20,8 @@ const axiosBaseQuery = ({baseURL}) => async ({url, method, data, params }) => {
         let err = axiosError;
         return {
             error: {
-                status: err.response.status,
-                data: err.response.data.error
+                status: err.response?.status,
+                data: err.response?.data?.error || err.message
             }
         }
     }
@@ -28,7 +30,7 @@ const axiosBaseQuery = ({baseURL}) => async ({url, method, data, params }) => {
 
 export const todoApi = createApi({
     reducerPath: 'todoApi',
-    baseQuery: axiosBaseQuery({baseURL: '/api'}),
+    baseQuery: axiosBaseQuery({baseURL}),
     tagTypes: ['Todos'],
     endpoints: (builder) => ({
         getTodos: builder.query({
