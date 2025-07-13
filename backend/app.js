@@ -18,7 +18,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(cors({
-    origin: 'https://todolist-frontend-lucs.onrender.com/',
+    origin: 'https://todolist-frontend-lucs.onrender.com',
     credentials: true,
   }));
 } else {
