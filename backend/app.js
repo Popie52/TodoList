@@ -18,7 +18,7 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(cors({
-    origin: ['https://your-frontend-render-url.onrender.com', 'http://localhost:5173'],
+    origin: 'https://todolist-frontend-lucs.onrender.com/',
     credentials: true,
   }));
 } else {
