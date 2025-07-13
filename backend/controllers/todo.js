@@ -3,14 +3,19 @@ const todoRouter = express.Router();
 import Todo from "../models/Todo.js";
 import middleware from "../utils/middleware.js";
 
-todoRouter.get("/", async (req, res) => {
-  const result = await Todo.find({});
-  res.json(result);
+todoRouter.get("/", middleware.userExtractor ,async (req, res, next) => {
+  try {
+    const user = req.user;
+    const result = await Todo.find({ user: user._id });
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
 todoRouter.post("/", middleware.userExtractor, async (req, res, next) => {
   try {
-    const { title, description, completed, priority, dueDate } = req.body;
+    const { title, description, completed, priority, dueDate, category, tags } = req.body;
     const user = req.user;
     const newTodo = new Todo({
       title,
@@ -19,6 +24,8 @@ todoRouter.post("/", middleware.userExtractor, async (req, res, next) => {
       priority,
       completed: completed ?? false,
       user: user._id,
+      category,
+      tags,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

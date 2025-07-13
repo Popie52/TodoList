@@ -14,6 +14,14 @@ const todoSchema = new mongoose.Schema({
     updatedAt: Date,
     dueDate: Date,
     priority: String,
+    category: {
+        type: String,
+        default: ''
+    },
+    tags: {
+        type: [String],
+        default: []
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
