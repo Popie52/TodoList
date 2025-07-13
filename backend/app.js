@@ -9,9 +9,21 @@ import userRouter from "./controllers/users.js";
 import commentRouter from "./controllers/comment.js";
 import todoRouter from "./controllers/todo.js";
 import testRouter from "./controllers/testing.js";
+import cors from 'cors';
+
 
 const app = express();
 app.use(express.json());
+
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(cors({
+    origin: ['https://your-frontend-render-url.onrender.com', 'http://localhost:5173'],
+    credentials: true,
+  }));
+} else {
+  app.use(cors());
+}
 
 mongoose
   .connect(config.MONGODB_URI)
@@ -19,8 +31,8 @@ mongoose
   .catch((err) => {
     logger.error(err.message);
     process.exit(1);
-  });
-
+});
+ 
 app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 app.use(middleware.tokenExtracter);
@@ -29,7 +41,8 @@ app.use("/api/comments", commentRouter);
 app.use("/api/todos", todoRouter);
 if(process.env.NODE_ENV === 'test') app.use('/api/test', testRouter);
 
-app.use(middleware.unknownEndpoint);
+
+// app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
 export default app;
