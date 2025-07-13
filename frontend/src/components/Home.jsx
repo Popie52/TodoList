@@ -4,9 +4,7 @@ import Welcome from "./Welcome";
 import LogInForm from "./auth/LogInForm";
 import SignUpForm from "./auth/SignUpForm";
 import Navbar from "./Navbar";
-// import TodoDetailPage from "./Todos/TodoDetailPage";
 import PrivateRoute from "./PrivateRoute";
-// import TodoList from "./Todos/TodoList";
 import TodoDashBoard from "./Todos/TodoDashBoard";
 import TodosForm from "./Todos/TodosForm";
 import TodoAnalytics from "./Todos/TodoAnalytics";
@@ -32,9 +30,7 @@ const Home = () => {
               }
             />
             <Route path="/analytics" element={ <TodoAnalytics/> } />
-            {/* <Route path="/todosList" element={<TodoList />} /> */}
             <Route path="/todos" element={<TodosForm />} />
-            {/* <Route path="/todos/:id" element={<TodoDetailPage />} /> */}
             <Route path="/completed" element={<CompletedTasks /> } />
           </Routes>
         </main>
